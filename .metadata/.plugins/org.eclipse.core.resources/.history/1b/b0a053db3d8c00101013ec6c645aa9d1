@@ -1,0 +1,58 @@
+class HotelReservationServlet {
+	constructor() {
+	        this.selectedRooms = [];
+	        this.reservationData = {};
+	        this.init();
+	    }
+
+	    init() {
+	        this.setupEventListeners();
+	        this.setMinDates();
+	    }
+
+	    setupEventListeners() {
+	        // Checkboxes de quartos
+	        document.querySelectorAll('.room-checkbox').forEach(checkbox => {
+	            checkbox.addEventListener('change', (e) => this.handleRoomSelection(e));
+	        });
+
+	        // Botões de navegação
+	        const continueBtn = document.getElementById('continueBtn');
+	        if (continueBtn) {
+	            continueBtn.addEventListener('click', () => this.goToPage2());
+	        }
+
+	        const backBtn = document.getElementById('backBtn');
+	        if (backBtn) {
+	            backBtn.addEventListener('click', () => this.goToPage1());
+	        }
+
+	        // Formulário de reserva
+	        const reservationForm = document.getElementById('reservationForm');
+	        if (reservationForm) {
+	            reservationForm.addEventListener('submit', (e) => this.submitReservation(e));
+	        }
+
+	        // Serviços adicionais
+	        document.querySelectorAll('#breakfast, #parking, #spa').forEach(checkbox => {
+	            checkbox.addEventListener('change', () => this.updateTotal());
+	        });
+
+	        // Modal
+	        const closeModalBtn = document.getElementById('closeModal');
+	        if (closeModalBtn) {
+	            closeModalBtn.addEventListener('click', () => this.closeModal());
+	        }
+
+	        // Atualização de datas
+	        const checkinInput = document.getElementById('checkin');
+	        if (checkinInput) {
+	            checkinInput.addEventListener('change', () => this.updateTotal());
+	        }
+
+	        const checkoutInput = document.getElementById('checkout');
+	        if (checkoutInput) {
+	            checkoutInput.addEventListener('change', () => this.updateTotal());
+	        }
+	    }
+}

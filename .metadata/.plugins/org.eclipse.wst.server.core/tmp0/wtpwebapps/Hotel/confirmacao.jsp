@@ -1,0 +1,119 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    <!DOCTYPE html>
+	<html lang="pt-BR">
+	<head>
+	    <meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <title>Confirmação de Reserva - Hotel Reservas</title>
+	    <script src="https://cdn.tailwindcss.com"></script>
+	    <link rel="stylesheet" href="css/style.css">
+	</head>
+	<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+	    <div id="page2" class="page active">
+	        <div class="container mx-auto px-4 py-8">
+	            <header class="text-center mb-8">
+	                <h1 class="text-4xl font-bold text-gray-800 mb-2">🏨 Finalizar Reserva</h1>
+	                <p class="text-gray-600">Complete seus dados para confirmar</p>
+	            </header>
+	
+	            <div class="max-w-4xl mx-auto">
+	                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+	                    <!-- resumo reseva -->
+	                    <div class="bg-white rounded-lg shadow-lg p-6">
+	                        <h2 class="text-2xl font-semibold text-gray-800 mb-4">📋 Resumo da Reserva</h2>
+	                        <div id="reservationSummary" class="space-y-4">
+	                            <!-- aqui tinha javascript -->
+	                        </div>
+	                        <div class="border-t pt-4 mt-4">
+	                            <div class="flex justify-between items-center text-xl font-bold text-gray-800">
+	                                <span>Total:</span>
+	                                <span id="totalPrice">R$ 0</span>
+	                            </div>
+	                        </div>
+	                    </div>
+	
+	                    <!-- formulário-->
+	                    <div class="bg-white rounded-lg shadow-lg p-6">
+	                        <h2 class="text-2xl font-semibold text-gray-800 mb-4">👤 Dados do Hóspede</h2>
+	                        <form id="reservationForm" class="space-y-4">
+	                            <div>
+	                                <label class="block text-sm font-medium text-gray-700 mb-2">Nome Completo</label>
+	                                <input type="text" id="fullName" required
+	                                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+	                            </div>
+	                            <div>
+	                                <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+	                                <input type="email" id="email" required
+	                                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+	                            </div>
+	                            <div>
+	                                <label class="block text-sm font-medium text-gray-700 mb-2">Telefone</label>
+	                                <input type="tel" id="phone" required
+	                                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+	                            </div>
+	                            <div>
+	                                <label class="block text-sm font-medium text-gray-700 mb-2">CPF</label>
+	                                <input type="text" id="cpf" required
+	                                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+	                            </div>
+	
+	                            <div class="space-y-3">
+	                                <h3 class="text-lg font-medium text-gray-800">Serviços Adicionais</h3>
+	                                <div class="flex items-center">
+	                                    <input type="checkbox" id="breakfast" class="mr-2">
+	                                    <label for="breakfast" class="text-sm text-gray-700">Café da manhã (+R$
+	                                        25/dia)</label>
+	                                </div>
+	                                <div class="flex items-center">
+	                                    <input type="checkbox" id="parking" class="mr-2">
+	                                    <label for="parking" class="text-sm text-gray-700">Estacionamento (+R$
+	                                        15/dia)</label>
+	                                </div>
+	                                <div class="flex items-center">
+	                                    <input type="checkbox" id="spa" class="mr-2">
+	                                    <label for="spa" class="text-sm text-gray-700">Acesso ao SPA (+R$ 50/dia)</label>
+	                                </div>
+	                            </div>
+	
+	                            <div class="flex space-x-4 pt-4">
+	                                <button type="button" id="backBtn"
+	                                    class="flex-1 bg-gray-500 hover:bg-gray-600 text-white font-semibold py-3 px-6 rounded-lg transition duration-300">
+	                                    ← Voltar
+	                                </button>
+	                                <button type="submit"
+	                                    class="flex-1 bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-300">
+	                                    Confirmar Reserva ✓
+	                                </button>
+	                            </div>
+	                        </form>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	
+	    <!-- modal -->
+	    <div id="confirmationModal"
+	        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+	        <div class="bg-white rounded-lg p-8 max-w-md mx-4">
+	            <div class="text-center">
+	                <div class="text-6xl mb-4">✅</div>
+	                <h2 class="text-2xl font-bold text-gray-800 mb-4">Reserva Confirmada!</h2>
+	                <p class="text-gray-600 mb-6">Sua reserva foi processada com sucesso. Você receberá um email de
+	                    confirmação em breve.</p>
+	                <div class="bg-gray-100 rounded-lg p-4 mb-6">
+	                    <p class="text-sm text-gray-700"><strong>Código da Reserva:</strong></p>
+	                    <p class="text-lg font-mono font-bold text-blue-600" id="reservationCode"></p>
+	                </div>
+	                <button id="closeModal"
+	                    class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg transition duration-300">
+	                    Fechar
+	                </button>
+	            </div>
+	        </div>
+	    </div>
+	
+	    <script src="js/script.js"></script>
+	</body>
+	</html>
